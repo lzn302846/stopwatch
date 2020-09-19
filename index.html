@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>秒表</title>
+    <style>
+         body{background-image: linear-gradient(to right,#021330,#243b6c,#021330);}
+        div{font-size: 25px;background: blueviolet;color: black;font-weight: bold;margin: 15px auto; width: 200px;text-align: center; line-height: 50px;border-radius: 20px;}
+    </style>
+</head>
+<body>
+    <div>00:00:00:00</div>
+    <div>
+    <button>开始</button>
+    <button>暂停</button>
+    <button>继续</button>
+    <button>重置</button>
+</div>
+    <script>
+        var oDiv = document.querySelector('div');
+        var oBtn1 = document.querySelectorAll('button')[0]
+        var oBtn2 = document.querySelectorAll('button')[1]
+        var oBtn3 = document.querySelectorAll('button')[2]
+        var oBtn4 = document.querySelectorAll('button')[3]    
+        var time = '';
+        function setT(){
+            var ms = 0;
+            var s = 0;
+            var m = 0;
+            var h = 0;
+            var msStr = '';
+            var sStr = '';
+            var mStr = '';
+            var hStr = '';
+            time = setInterval(function(){
+                ms++;
+                if(ms < 10){
+                    msStr = '0' + ms;
+                }else{
+                    msStr = ms
+                }
+                if(s < 10){
+                    sStr = '0' + s;
+                }else{
+                    sStr = s;
+                }
+                if(m < 10){
+                    mStr = '0' + m;
+                }else{
+                    mStr = m;
+                }
+                if(h < 10){
+                    hStr = '0' + h;
+                }else{
+                    hStr = h;
+                }
+                if( ms == 99){
+                    ms = 0;
+                    s++;
+                }
+                if( s == 59){
+                    s = 0;
+                    m++;
+                }
+                if( m == 59){
+                    m = 0;
+                    h++;
+                }
+                if( h == 24){
+                    h = 0;
+                }
+                oDiv.innerHTML = `${hStr}:${mStr}:${sStr}:${msStr}`
+            },10)
+        }
+        //按钮
+        oBtn1.addEventListener('click',function(){
+            setT();
+            oBtn1.disabled = true;
+            oBtn2.disabled = false;
+            oBtn3.disabled = true;
+            oBtn4.disabled = true;
+        })
+        oBtn2.addEventListener('click',function(){
+            clearInterval(time)
+            oBtn1.disabled = true;
+            oBtn2.disabled = true;
+            oBtn3.disabled = false;
+            oBtn4.disabled = false;
+        })
+        oBtn3.addEventListener('click',function(){
+            setT();
+            oBtn1.disabled = true;
+            oBtn2.disabled = false;
+            oBtn3.disabled = true;
+            oBtn4.disabled = true;
+        })
+        oBtn4.addEventListener('click',function(){
+            ms = 0;
+            s = 0;
+            m = 0;
+            h = 0;
+            oDiv.innerHTML = '00:00:00:00'
+            oBtn1.disabled = false;
+            oBtn2.disabled = true;
+            oBtn3.disabled = true;
+            oBtn4.disabled = true;
+        })
+    </script>
+</body>
+</html>
